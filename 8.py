@@ -23,7 +23,7 @@ X = vectorizer.fit_transform(X)
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
 # Step 4: Train the Naive Bayes classifier
-nb = MultinomialNB()
+nb = MultinomialNB(var_smoothing=1e-9)
 nb.fit(X_train, y_train)
 
 # Step 5: Make predictions
