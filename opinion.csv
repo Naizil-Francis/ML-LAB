@@ -1,0 +1,16 @@
+Sky,AirTemp,Humidity,Wind,Water,Forecast,EnjoySport
+Sunny,Cold,High,Strong,Cool,Change,1
+Sunny,Warm,High,Weak,Cool,Same,0
+Overcast,Cold,Normal,Strong,Warm,Change,1
+Sunny,Warm,Normal,Strong,Cool,Same,0
+Sunny,Warm,Normal,Strong,Cool,Same,1
+Overcast,Warm,High,Weak,Warm,Same,0
+Sunny,Warm,High,Weak,Cool,Change,1
+Overcast,Cold,High,Strong,Warm,Same,0
+Overcast,Cold,Normal,Weak,Cool,Change,1
+Rainy,Warm,Normal,Weak,Cool,Same,1
+Sunny,Cold,Normal,Strong,Cool,Same,0
+Overcast,Cold,High,Strong,Warm,Same,1
+Overcast,Cold,Normal,Weak,Warm,Change,1
+Overcast,Warm,High,Strong,Warm,Change,0
+Rainy,Cold,High,Weak,Cool,Same,1
