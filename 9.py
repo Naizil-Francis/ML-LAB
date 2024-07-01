@@ -1,28 +1,32 @@
-from ucimlrepo import fetch_ucirepo
-from sklearn.model_selection import train_test_split
-from sklearn.naive_bayes import GaussianNB
-from sklearn.metrics import accuracy_score
-
-# Fetch Heart Disease dataset (UCI repository ID: 294)
-dataset = fetch_ucirepo(id=45)
-
-# Split data into features (X) and target (y)
-X = dataset.data.features 
-y = dataset.data.targets 
-y = y.values.ravel()
-
-# Split data into training and testing sets
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
-
-# Initialize Gaussian Naive Bayes classifier
-clf = GaussianNB()
-
-# Train the classifier
-clf.fit(X_train, y_train)
-
-# Predict on test data
-y_pred = clf.predict(X_test)
-
-# Evaluate accuracy
-accuracy = accuracy_score(y_test, y_pred)
-print(f"Accuracy: {accuracy}")
+import numpy as np
+import csv
+import pandas as pd
+from pgmpy.models import BayesianModel
+from pgmpy.estimators import MaximumLikelihoodEstimator
+from pgmpy.inference import VariableElimination
+#read Cleveland Heart Disease data
+heartdisease = pd.read_csv('heart.csv')
+heartdisease = heartdisease.replace('?',np.nan)
+#display the data
+print('Few examples from the dataset are given below')
+print(heartdisease.head())
+#Model Bayesian Network
+model=BayesianModel([('age','trestbps'),('age','fbs'),
+('sex','trestbps'),('exang','trestbps'),('trestbps','heartdisease'),('fbs','heartdisease'),('heartdisease','restecg'),
+('heartdisease','thalach'),('heartdisease','chol')])
+#Learning CPDs using Maximum Likelihood Estimators
+print('\n Learning CPD using Maximum likelihood estimators')
+model.fit(heartdisease, estimator=MaximumLikelihoodEstimator)
+# Inferencing with Bayesian Network
+print('\n Inferencing with Bayesian Network:')
+HeartDisease_infer = VariableElimination(model)
+#computing the Probability of HeartDisease given Age
+print('\n 1. Probability of HeartDisease given Age=30')
+q=HeartDisease_infer.query(variables=['heartdisease'],evidence
+={'age':28})
+print(q['heartdisease'])
+#computing the Probability of HeartDisease given cholesterol
+print('\n 2. Probability of HeartDisease given cholesterol=100')
+q=HeartDisease_infer.query(variables=['heartdisease'],evidence
+={'chol':100})
+print(q['heartdisease'])
