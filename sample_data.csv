@@ -1,7 +1,11 @@
 text,label
-This is a great movie,positive
-I hated the film,negative
-Best film ever,positive
-It was a terrible experience,negative
-Fantastic storyline and acting,positive
-Not worth the watch,negative
+this is a great movie,positive
+i hated the film,negative
+best film ever,positive
+it was a terrible experience,negative
+fantastic storyline and acting,positive
+not worth the watch,negative
+movie was great,positive
+movie had positive imd rating,positive
+movie was crap,negative
+the story was bad at end,negative

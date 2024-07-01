@@ -1,45 +1,41 @@
 import pandas as pd
-from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import LabelEncoder
+from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.naive_bayes import MultinomialNB
-from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
-import matplotlib.pyplot as plt
-import seaborn as sns
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report
 
-# Load the dataset from the CSV file
-df = pd.read_csv('sample_data.csv')
+data=data = pd.read_csv('sample_data.csv')
 
-# Check the first few rows of the dataset
-print(df.head())
+# Step 2: Preprocess the data
+X = data['text']
+y = data['label']
 
-# Preprocess the text data using TF-IDF vectorization
-vectorizer = TfidfVectorizer(stop_words='english')
-X = vectorizer.fit_transform(df['text'])
-y = df['label']
+# Encode the labels
+label_encoder = LabelEncoder()
+y = label_encoder.fit_transform(y)
 
-# Split the dataset into training and testing sets
+# Step 3: Vectorize the text data
+vectorizer = CountVectorizer()
+X = vectorizer.fit_transform(X)
+
+# Split the data into training and testing sets
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
 
-# Initialize and train the Naive Bayes classifier
-nb_clf = MultinomialNB()
-nb_clf.fit(X_train, y_train)
+# Step 4: Train the Naive Bayes classifier
+nb = MultinomialNB()
+nb.fit(X_train, y_train)
 
-# Make predictions
-y_pred = nb_clf.predict(X_test)
+# Step 5: Make predictions
+y_pred = nb.predict(X_test)
 
-# Evaluate the model
+# Step 6: Evaluate the model
 accuracy = accuracy_score(y_test, y_pred)
-print(f"Accuracy: {accuracy * 100:.2f}%")
+conf_matrix = confusion_matrix(y_test, y_pred)
+class_report = classification_report(y_test, y_pred)
 
-# Print the classification report
-print("\nClassification Report:")
-print(classification_report(y_test, y_pred))
-
-# Confusion Matrix
-conf_mat = confusion_matrix(y_test, y_pred)
-plt.figure(figsize=(8, 6))
-sns.heatmap(conf_mat, annot=True, fmt='d', cmap='Blues', xticklabels=nb_clf.classes_, yticklabels=nb_clf.classes_)
-plt.xlabel('Predicted')
-plt.ylabel('Actual')
-plt.title('Confusion Matrix')
-plt.show()
+print(f'Accuracy: {accuracy}')
+print('Confusion Matrix:')
+print(conf_matrix)
+print('Classification Report:')
+print(class_report)
