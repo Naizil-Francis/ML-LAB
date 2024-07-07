@@ -31,18 +31,9 @@ grid_search.fit(X_train, y_train)
 
 print("\nBest parameters found:\n", grid_search.best_params_)
 print("\nBest cross-validation accuracy:\n", grid_search.best_score_)
+
 best_classifier = grid_search.best_estimator_
 best_classifier.fit(X_train, y_train)
 y_pred = best_classifier.predict(X_test)
 accuracy = accuracy_score(y_test, y_pred)
-print("Accuracy is:", accuracy)
-
-results = grid_search.cv_results_
-plt.figure(figsize=(10, 6))
-plt.plot(param_grid['var_smoothing'], results['mean_test_score'], marker='o')
-plt.xscale('log')
-plt.xlabel('var_smoothing')
-plt.ylabel('Mean Accuracy')
-plt.title('Accuracy vs. var_smoothing')
-plt.grid(True)
-plt.show()
+print(f"Accuracy: {accuracy * 100:.2f}%")
