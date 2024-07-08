@@ -9,14 +9,14 @@ with open('ENJOYSPORT.csv', newline='') as csvfile:
         training_data.append(row)
 
 # Initialize hypothesis with '?'
-hypothesis = ['?'] * (len(training_data[0]) - 1)
+hypothesis = ['0'] * (len(training_data[0]) - 1)
 
 # Apply Find-S algorithm
 for example in training_data:
     if example[-1] == '1':
         for i in range(len(hypothesis)):
             if hypothesis[i] != example[i]:
-                if hypothesis[i] == '?':
+                if hypothesis[i] == '0':
                     hypothesis[i] = example[i]
                 else:
                     hypothesis[i] = '?'
